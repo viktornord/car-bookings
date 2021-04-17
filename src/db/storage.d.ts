@@ -5,25 +5,27 @@ export interface IStorage {
 }
 
 export interface ICustomer {
-    id: number;
     name: string;
     email: string;
     phone: string;
 }
 
-export interface IVehicle {
+export interface INewVehicle {
     make: string;
     model: string;
 }
 
-export interface IBooking {
-    status: BOOKING_STATUS;
-    customerId: number;
-    vehicle: IVehicle & { VIN: string };
-    createdAt: Date;
+export interface IVehicle extends INewVehicle {
+    VIN: string
 }
 
-export enum BOOKING_STATUS {
-    PROCESSING = 'processing',
-    DONE = 'done',
+export interface INewBooking {
+    customer: ICustomer;
+    vehicle: INewVehicle;
+}
+
+export interface IBooking extends INewBooking {
+    status: 'processing' | 'done';
+    vehicle: IVehicle;
+    createdAt: Date;
 }

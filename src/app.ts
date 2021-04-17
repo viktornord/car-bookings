@@ -1,9 +1,23 @@
-import { fastify as f } from 'fastify';
+import { fastify } from 'fastify';
+import { db } from './db/db-manager';
+import { INewBooking } from './db/storage';
 
-const fastify = f({ logger: true })
+const server = fastify({ logger: true })
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' }
-})
+server
+  .get('/bookings', async (request, reply) => {
+    const { date } = request.query as { date: string};
+    return db.getBookings(date);
+  })
+  .post('/bookings', async (request, reply) => {
+    await db.addBooking(request.body as INewBooking);
+    reply.status(201).send();
+  })
+  .post('/bookings/capacity', async (request, reply) => {
+    const { capacity } = request.body as { capacity: number };
+    await db.updateBookingCapacity(capacity);
+    reply.status(200).send();
+  });
 
-fastify.listen(3000)
+
+  server.listen(3000)
