@@ -19,11 +19,8 @@ class DbManager {
     }
 
     addBooking(newBooking: INewBooking): void {
-        console.log(this.storage.bookings);
         const processingBookings = this.storage.bookings.filter((booking) => {
             if (booking.status === BOOKING_STATUS.PROCESSING) {
-                console.log('checking processing...')
-                console.log(Date.now() - booking.createdAt.getTime(), BOOKING_PROCESSING_TIME_MS);
                 if (Date.now() - booking.createdAt.getTime() < BOOKING_PROCESSING_TIME_MS) {
                     // still processing
                     return true;
@@ -32,7 +29,6 @@ class DbManager {
                 booking.status = BOOKING_STATUS.DONE;
             }
         });
-        console.log(processingBookings);
         if (processingBookings.length == MAX_PROCESSING_BOOKINGS_CAPACITY) {
             // Better to implement a queuing (may be achieved in this case for example with a new status)
             throw new Error('We can not accept a new booking now. Please try again later.');
@@ -42,8 +38,8 @@ class DbManager {
         console.log(this.storage.bookings);
     }
 
-    getBookings(date: string): IBooking[] {
-        const day = new Date(date).toLocaleDateString();
+    getBookings(date: Date): IBooking[] {
+        const day = date.toLocaleDateString();
 
         return this.storage.bookings.filter((booking) => booking.createdAt.toLocaleDateString() === day);
     }
