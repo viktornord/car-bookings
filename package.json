@@ -1,0 +1,20 @@
+{
+  "name": "car-bookings",
+  "version": "1.0.0",
+  "description": "Car bookings test",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Viktor U.",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "fastify": "^3.14.2"
+  }
+}
