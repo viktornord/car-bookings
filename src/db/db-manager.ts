@@ -2,6 +2,11 @@ import * as storage from './storage.json';
 import { IStorage, IBooking, INewBooking } from './storage';
 import { Booking, BOOKING_STATUS } from './models/booking';
 
+export type BookingsFilter = {
+    date?: Date;
+    vehicleVIN?: string;
+}
+
 const BOOKING_PROCESSING_TIME_MS = 2 * 3600 * 1000;
 // can be changed
 let MAX_PROCESSING_BOOKINGS_CAPACITY = 2;
@@ -40,13 +45,16 @@ class DbManager {
         return savedBooking;
     }
 
-    getBookings(date: Date): IBooking[] {
-        if (!date) {
+    getBookings({ date, vehicleVIN }: BookingsFilter): IBooking[] {
+        if (!date && !vehicleVIN) {
             return this.storage.bookings; // return all bookings
         }
-        const day = date.toLocaleDateString();
+        const day = date?.toLocaleDateString();
 
-        return this.storage.bookings.filter((booking) => booking.createdAt.toLocaleDateString() === day);
+        return this.storage.bookings.filter(({ createdAt, vehicle: { VIN } }) => {
+            return (!day || createdAt.toLocaleDateString() === day)
+                && (!vehicleVIN || VIN === vehicleVIN);
+        });
     }
 }
 

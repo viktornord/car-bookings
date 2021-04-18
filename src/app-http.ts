@@ -11,8 +11,8 @@ const server = fastify({ logger: true })
 
 server
   .get('/bookings', (request) => {
-    const { date } = request.query as { date: string};
-    return bookingsController.getBookings({ date })
+    const { date, vehicleVIN } = request.query as { date: string, vehicleVIN: string };
+    return bookingsController.getBookings({ date, vehicleVIN })
   })
   .post('/bookings', async (request, reply) => {
     const booking = request.body as INewBooking;

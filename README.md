@@ -6,7 +6,7 @@
 
 # HTTP Server
 ## Run
-> npm start:http
+> npm run start:http
 
 ## API
 note: substitue `PORT` with `HTTP_SERVER_PORT` from your `.env` file 
@@ -15,9 +15,9 @@ note: by default booking capacity is 2
 ```bash
 curl -i -X POST -H "Content-Type: application/json" -d '{"customer": {"capacity":3}'  http://localhost:PORT/bookings/capacity
 ```
-## Get bookings by date
+## Get bookings by date and/or by vehicle VIN
 ```bash
-curl -i -X GET  http://localhost:PORT/bookings?date=04/17/2021
+curl -i -X GET  http://localhost:PORT/bookings?date=04/17/2021&vehicleVIN=foo
 ```
 ## Add a new booking
 ```bash
@@ -50,7 +50,7 @@ Variables
   "capacity": 3
 }
 ```
-## Get bookings by date
+## Get bookings by date and/or by vehicle VIN
 ```graphql
 {
   bookings {
@@ -64,7 +64,8 @@ Variables
 Variables [OPTIONAL]
 ```json
 {
-  "date": "04/18/21"
+  "date": "04/18/21", // optional
+  "vehicleVIN": "foo", // optional
 }
 ```
 note: if `date` variable is not provided - all bookings will be returned

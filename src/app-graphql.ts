@@ -11,8 +11,9 @@ const { GRAPHQL_SERVER_PORT } = process.env;
 const resolvers = {
   Query: {
     bookings: (parent, args, context) => {
-        const { date } = context.variables;
-        return bookingsController.getBookings({ date })
+        const { date, vehicleVIN } = context.variables;
+        console.log(context.variables);
+        return bookingsController.getBookings({ date, vehicleVIN })
     },
   },
   Mutation: {
