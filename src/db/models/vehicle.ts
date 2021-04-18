@@ -1,5 +1,5 @@
 import { randomBytes } from 'crypto';
-import { IVehicle } from './storage';
+import { IVehicle } from '../storage';
 
 export class Vehicle implements IVehicle {
     make: string;

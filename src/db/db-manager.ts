@@ -1,6 +1,6 @@
 import * as storage from './storage.json';
 import { IStorage, IBooking, INewBooking } from './storage';
-import { Booking, BOOKING_STATUS } from './booking';
+import { Booking, BOOKING_STATUS } from './models/booking';
 
 const BOOKING_PROCESSING_TIME_MS = 2 * 3600 * 1000;
 // can be changed
@@ -18,7 +18,7 @@ class DbManager {
         MAX_PROCESSING_BOOKINGS_CAPACITY = capacity;
     }
 
-    addBooking(newBooking: INewBooking): void {
+    addBooking(newBooking: INewBooking): Booking {
         const processingBookings = this.storage.bookings.filter((booking) => {
             if (booking.status === BOOKING_STATUS.PROCESSING) {
                 if (Date.now() - booking.createdAt.getTime() < BOOKING_PROCESSING_TIME_MS) {
@@ -34,8 +34,10 @@ class DbManager {
             throw new Error('We can not accept a new booking now. Please try again later.');
         }
         // can accept a new booking
-        this.storage.bookings.push(new Booking(newBooking));
-        console.log(this.storage.bookings);
+        const savedBooking = new Booking(newBooking);
+        this.storage.bookings.push(savedBooking);
+
+        return savedBooking;
     }
 
     getBookings(date: Date): IBooking[] {

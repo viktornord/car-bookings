@@ -5,20 +5,21 @@ const DEALERSHIP_HOURS = { from: 9, to: 14 };
 
 class BookingsController {
 
-    saveBooking(booking: INewBooking) {
+    async saveBooking({ booking }: { booking: INewBooking }) {
         if (!this.isBookingPossible()) {
             throw new Error(`Booking is impossible. We are working from ${DEALERSHIP_HOURS.from} AM to ${DEALERSHIP_HOURS.to % 12} PM`);
         }
-        db.addBooking(booking);
+        return db.addBooking(booking as INewBooking);
+    }
+    
+    async getBookings({ date }: { date: string }) {
+        return db.getBookings(new Date(date));
     }
 
-    getBookings(day: string) {
-        const date = new Date(day);
-        return db.getBookings(date);
-    }
+    async updateBookingCapacity({ capacity }: { capacity: number }) {
+        await db.updateBookingCapacity(capacity);
 
-    updateBookingCapacity(capacity: number) {
-        db.updateBookingCapacity(capacity);
+        return { capacity };
     }
 
     private isBookingPossible() {

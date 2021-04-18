@@ -1,4 +1,4 @@
-import { IBooking, ICustomer, IVehicle } from './storage';
+import { IBooking, ICustomer, IVehicle } from '../storage';
 import { Vehicle } from './vehicle';
 
 export enum BOOKING_STATUS {
