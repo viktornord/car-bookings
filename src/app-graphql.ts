@@ -1,7 +1,12 @@
+import { config } from 'dotenv';
 import { ApolloServer } from 'apollo-server';
 
 import { bookingsController } from './controllers/bookings'
 import { typeDefs } from './type-defs-graphql'
+
+config();
+
+const { GRAPHQL_SERVER_PORT } = process.env;
 
 const resolvers = {
   Query: {
@@ -24,4 +29,4 @@ const resolvers = {
 
   const server = new ApolloServer({ typeDefs, resolvers, context: ({ req }) => ({...req.body }) });
 
-  server.listen().then(({ url }) => console.log(`🚀  Server ready at ${url}`));
+  server.listen(GRAPHQL_SERVER_PORT).then(({ url }) => console.log(`🚀  Server ready at ${url}`));

@@ -41,6 +41,9 @@ class DbManager {
     }
 
     getBookings(date: Date): IBooking[] {
+        if (!date) {
+            return this.storage.bookings; // return all bookings
+        }
         const day = date.toLocaleDateString();
 
         return this.storage.bookings.filter((booking) => booking.createdAt.toLocaleDateString() === day);

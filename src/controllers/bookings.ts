@@ -12,8 +12,8 @@ class BookingsController {
         return db.addBooking(booking as INewBooking);
     }
     
-    async getBookings({ date }: { date: string }) {
-        return db.getBookings(new Date(date));
+    async getBookings({ date }: { date?: string }) {
+        return db.getBookings(date && new Date(date));
     }
 
     async updateBookingCapacity({ capacity }: { capacity: number }) {

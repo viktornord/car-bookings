@@ -1,6 +1,11 @@
+import { config } from 'dotenv';
 import { fastify } from 'fastify';
 import { INewBooking } from './db/storage'
 import { bookingsController } from './controllers/bookings';
+
+config();
+
+const { HTTP_SERVER_PORT } = process.env;
 
 const server = fastify({ logger: true })
 
@@ -20,4 +25,4 @@ server
   });
 
 
-  server.listen(3000);
+  server.listen(HTTP_SERVER_PORT, () => console.log(`🚀  Server ready at http://localhost:${HTTP_SERVER_PORT}`));
