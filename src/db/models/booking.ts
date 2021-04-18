@@ -1,4 +1,4 @@
-import { IBooking, ICustomer, IVehicle } from '../storage';
+import { IBooking, ICustomer, INewBooking, IVehicle } from '../storage';
 import { Vehicle } from './vehicle';
 
 export enum BOOKING_STATUS {
@@ -12,7 +12,7 @@ export class Booking implements IBooking {
     vehicle: IVehicle;
     createdAt: Date;
     
-    constructor(data) {
+    constructor(data: INewBooking) {
         Object.assign(this, data);
         this.createdAt = new Date();
         this.status = BOOKING_STATUS.PROCESSING;

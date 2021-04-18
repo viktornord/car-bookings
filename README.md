@@ -94,3 +94,9 @@ Variables
   }
 }
 ```
+
+# Tests
+## Run
+> npm test
+
+notice: tests are to be added (for now only [`src/db/models/booking.ts`](src/db/models/booking.ts) is covered)
