@@ -1,5 +1,5 @@
 # Setup
-1. `cd` to a repositry foler
+1. `cd` to a repository foler
 2. Install dependencies with `npm install`
 3. Copy environment variables example file `cp .env.example .env`
 4. specify values for your local run in `.env`
